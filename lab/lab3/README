@@ -1,2 +1,30 @@
 Lab 3
-Objective: Create a simple oauth2 client that obtains an access token
+Objective: Create a simple oauth2 client that obtains an access token and fetches a resource
+
+Task 1 -------------
+
+From this folder, run the following
+>cd simple-oauth2-api-client
+>mvn jetty:run
+
+This will start the simple-oauth2-api-client in jetty
+
+Open your browser and point it to http://localhost:8080 to access the application
+
+Expected outcome:
+
+You will end up at the first page saying that we need to navigate to Mina vårdkontakter in order to authorize usage of the scheduling API.
+
+When you click the link, nothing will happen, yet.
+
+
+Task 2 -------------
+
+Find the controller method corresponding to http://localhost:8080/ in the Java code.
+Inspect the following code and insert into the controller method to generate the correct URL to the authorization dialog.
+
+..... To be continued
+
+
+
+
