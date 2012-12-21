@@ -37,8 +37,14 @@ There is a page on the SDK site describing the development environment which is 
 
 Use curl to access the scheduled bookings for any of the fictive persons in the list above. 
 To do this you need to set the access token in the Authorization header of the request.
-The access token is set in the Authorization request header with a Bearer prefix: Authorization: Bearer [access token]
+The access token is set in the Authorization request header with a Bearer prefix: 
+  
+  Authorization: Bearer [access token]
+
 The URL to the sheduled bookings is: http://dev.apigw.minavardkontakter.se/crm/scheduling/v1/schedule
 
-Expected outcome: The bookings of the selected fictive person is returned.
+Expected outcome: The bookings of the selected fictive person is returned as json.
+You can read more about the API resource you just eused at this page:
+http://sdk.minavardkontakter.se/api/sv/service/tidbokning-hamta-alla-mina-tidbokningar-nationellt
+If you want, you can also try to get the same data returned as xml.
 
