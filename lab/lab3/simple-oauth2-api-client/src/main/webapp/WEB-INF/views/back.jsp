@@ -1,8 +1,16 @@
 <html>
 <body>
 <h2>We are now back in the application!</h2>
+
+
+<p>The authorization server attached an authorization code to the callback-url:
 <ul>
 	<li>authorization code: ${authorizationCode}</li>
+</ul>
+
+In the controller for this page we used the authorization code to fetch an access token from the oauth server:
+
+<ul>
 	<li>access token: ${accessToken}</li>
 </ul>
 
