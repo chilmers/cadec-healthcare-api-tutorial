@@ -7,6 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,11 @@ public class AppAPIController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/bookings", produces="application/json")  
 	public @ResponseBody List<Booking> getBookings() {
-		UserAccessToken userAccessToken = userAccessTokenRepository.findByUser("kallekula");
+		// Get the logged in user
+		User user  = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// Find the stored access token for the logged in user
+		UserAccessToken userAccessToken = userAccessTokenRepository.findByUser(user.getUsername());
+		// Use the access token to fetch the bookings of the logged in user
 		return fetchSchedule(userAccessToken.getAccessToken()).getBookings();
 	}
 	

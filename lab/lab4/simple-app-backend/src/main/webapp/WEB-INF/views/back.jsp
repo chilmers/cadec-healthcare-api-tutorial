@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <body>
 <h2>We are now back in the application!</h2>
@@ -15,7 +17,7 @@ In the controller for this page we used the authorization code to fetch an acces
 </ul>
 
 <p>Now you can try to use the generated access token to reach the bookings of the person
-you used for logging into Mina vårdkontakter.</p>
+you used for logging into Mina vÃ¥rdkontakter.</p>
 
 <ul>
 	<li>
@@ -23,6 +25,9 @@ you used for logging into Mina vårdkontakter.</p>
 	</li>
 	<li>
 		<a href="./..">Start over</a>
+	</li>
+	<li>
+		<a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
 	</li>
 </ul>
 </body>

@@ -13,6 +13,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,10 +70,13 @@ public class OAuth2ClientController {
 		String accessToken = fetchAccessToken(code, state);
 		
 		
+		// Get the logged in user
+		User user  = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		// Store the access token in the database for later use
 		UserAccessToken userAccessToken = new UserAccessToken();
 		userAccessToken.setAccessToken(accessToken);
-		userAccessToken.setUser("kallekula");
+		userAccessToken.setUser(user.getUsername());
 		userAccessTokenRepository.save(userAccessToken);
 
 		ModelAndView mav = new ModelAndView();
@@ -86,7 +91,9 @@ public class OAuth2ClientController {
 	
 	@RequestMapping("/show-schedule")
 	public ModelAndView showSchedule(HttpSession session) {
-		UserAccessToken userAccessToken = userAccessTokenRepository.findByUser("kallekula");
+		// Get the logged in user
+		User user  = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserAccessToken userAccessToken = userAccessTokenRepository.findByUser(user.getUsername());
 		String schedule = fetchSchedule(userAccessToken.getAccessToken());
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("schedule");
