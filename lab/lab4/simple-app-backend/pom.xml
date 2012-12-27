@@ -15,11 +15,6 @@
   		<version>2.5</version>
   		<scope>provided</scope>
   	</dependency>
-  	<dependency>
-  		<groupId>org.apigw.resourceserver.crm-scheduling</groupId>
-  		<artifactId>crm-scheduling-api-schemas</artifactId>
-  		<version>v1</version>
-  	</dependency>
   	<!-- Spring MVC -->
   	<dependency>
   		<groupId>org.springframework</groupId>
