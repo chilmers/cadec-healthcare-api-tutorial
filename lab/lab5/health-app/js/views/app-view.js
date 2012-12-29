@@ -26,17 +26,34 @@ var app = app || {};
 			//app.Schedule.on( 'change:completed', this.filterOne, this );
 			//app.Schedule.on( 'filter', this.filterAll, this );
 			//app.Schedule.on( 'all', this.render, this );
+			this.render();
 		},
 		
 		login: function() {
 			console.log('logging in...');
 			$.ajax({
 				type: 'POST',
-				url: 'http://localhost:8080/j_spring_security_check',
+				url: 'http://localhost:8080/api/login',
 				data: {
 					j_username: 'kallekula',
 					j_password: 'secret'
-				}
+				},
+		        success: function(data, status) {
+		            if (data.loggedIn) {
+		                // success
+		                dialog.dialog('close');
+		                location.href= getHost() + '/users';
+		            } else {
+						alert("success but fail")
+		                //loginFailed(data);
+		            }
+		        },
+				error: function() {
+					alert('inner error');
+				},
+				xhrFields: {
+			      withCredentials: true
+			   	}
 			}).done(function() { 
 				alert('login done');
 			}).fail(function() {
@@ -45,14 +62,37 @@ var app = app || {};
 		},
 		
 		fetchSchedule: function() {
-			app.Schedule.fetch({success:this.fetchSuccess, error:this.fetchError})
+			$.ajax({
+				type: 'GET',
+				url: 'http://localhost:8080/api/bookings',
+				success: this.fetchSuccess, 
+				error: this.fetchError,
+				beforeSend: function (xhr) { 
+						xhr.setRequestHeader ("Authorization", "Basic a2FsbGVrdWxhOnNlY3JldA==");
+				}
+			}).done(function() { 
+				alert("f success"); 
+			}).fail(function() {
+				alert("f fail"); 
+			});
+			
+			/*
+			app.Schedule.fetch({
+				success: this.fetchSuccess, 
+				error: this.fetchError,
+				beforeSend: function (xhr) { xhr.setRequestHeader ("Authorization", "Basic a2FsbGVrdWxhOnNlY3JldA=="); },
+				xhrFields: {
+			      withCredentials: true
+			   	}
+			})
 				.done(function() { 
 					alert("f success"); 
 				})
 		    	.fail(function() { 
 					alert("f error"); 
 				})
-		    	.always(function() { alert("f complete"); });			
+		    	.always(function() { alert("f complete"); });
+		*/			
 		},
 		
 		fetchSuccess: function(collection, response, options) {
@@ -64,7 +104,7 @@ var app = app || {};
 		},
 		
 		render: function() {
-			
+
 		},
 
 		// Add a single todo item to the list by creating a view for it, and
