@@ -27,16 +27,22 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
                         
-	<http security="none" pattern="/favicon.ico" />
-	<http security="none" pattern="/login*" />
-	<http security="none" pattern="/logout" />
-
-	<http auto-config="true">
-		<intercept-url pattern="/**" access="ROLE_USER" />
+	<http use-expressions="true">
+		<!-- Granting all anonymous web requests a particular identity and authorization-->
+		<anonymous/>
+		<!-- Permit all HTTP OPTIONS calls to the API, which is needed for CORS pre-flight -->
+		<intercept-url pattern="/api/**" access="permitAll" method="OPTIONS"/>
+		<!-- Permit all to access login page -->
+		<intercept-url pattern="/login*" access="permitAll"/>
+		<!-- Secure everything else -->
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		<!-- Permit HTTP Basic Authentication, for easy access to the API (NB! should be used along with HTTPS in production systems) -->
+		<http-basic />
+		<!-- Also permit form login -->
+		<form-login login-page="/login" default-target-url="/" authentication-failure-url="/loginfailed" />
+		<!-- Send users to the login page when access is denied -->
 		<access-denied-handler error-page="/login"/>
-		<form-login login-page="/login" 
-				default-target-url="/" 
-				authentication-failure-url="/loginfailed" />
+		<!-- And use /logout to logout -->
 		<logout logout-success-url="/logout" />
 	</http>
 
