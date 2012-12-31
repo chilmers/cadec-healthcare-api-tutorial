@@ -69,11 +69,16 @@ public class OAuth2ClientController {
 		// Use the authorization code we just got to get an access token
 		String accessToken = fetchAccessToken(code, state);
 		
-		
 		// Get the logged in user
 		User user  = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// Find and delete old access tokens
+		UserAccessToken existingToken = userAccessTokenRepository.findByUser(user.getUsername());
+		if (existingToken != null) {
+			userAccessTokenRepository.delete(existingToken);
+		}
 		
-		// Store the access token in the database for later use
+		// Store the new access token in the database for later use
 		UserAccessToken userAccessToken = new UserAccessToken();
 		userAccessToken.setAccessToken(accessToken);
 		userAccessToken.setUser(user.getUsername());
