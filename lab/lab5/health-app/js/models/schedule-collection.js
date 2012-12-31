@@ -18,7 +18,7 @@ var app = app || {};
 		//localStorage: new Store('todos-backbone'),
 	
 	  	parse: function(response) {
-	    	return response.results;
+	    	return response;
 	  	},
 	
 		// We keep the bookings in sequential order, despite being saved by unordered

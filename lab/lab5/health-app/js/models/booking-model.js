@@ -21,7 +21,6 @@ var app = app || {};
 			rebookingAllowed: ''
 		},
 		initialize: function() {
-			alert("Welcome to this world");
 		}
 	});
 	    	        
