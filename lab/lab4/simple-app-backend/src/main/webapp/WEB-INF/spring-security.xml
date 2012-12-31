@@ -32,8 +32,9 @@
 		<anonymous/>
 		<!-- Permit all HTTP OPTIONS calls to the API, which is needed for CORS pre-flight -->
 		<intercept-url pattern="/api/**" access="permitAll" method="OPTIONS"/>
-		<!-- Permit all to access login page -->
+		<!-- Permit all to access login page and favicon.ico since browsers asks for that file-->
 		<intercept-url pattern="/login*" access="permitAll"/>
+		<intercept-url pattern="/favicon.ico" access="permitAll"/>
 		<!-- Secure everything else -->
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		<!-- Permit HTTP Basic Authentication, for easy access to the API (NB! should be used along with HTTPS in production systems) -->
