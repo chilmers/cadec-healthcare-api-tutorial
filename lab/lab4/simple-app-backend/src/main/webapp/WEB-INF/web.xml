@@ -39,6 +39,17 @@
 	  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
   
+    <filter>
+  		<description>Adds cross domain flags to the response</description>
+  		<filter-name>responseHeaderFilter</filter-name>
+  		<filter-class>se.callistaenterprise.tutorial.healthcare.app.backend.filters.ResponseHeaderFilter</filter-class>
+  	</filter>
+  	
+  	<filter-mapping>
+  		<filter-name>responseHeaderFilter</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  
   	<filter>
   		<description>The spring security Filter chain</description>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -48,7 +59,7 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>
   
   	<servlet>
   		<description>The Spring MVC dispatcher Servlet</description>
