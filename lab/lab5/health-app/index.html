@@ -7,8 +7,8 @@
 	
 	<title>TEST</title>
 
-    <link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
-    <link rel="stylesheet" href="css/app.css" />	
+    <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
     <style>
         /* App custom styles */
     </style>
@@ -18,61 +18,88 @@
 </head>
 <body>
 	<script type="application/javascript" src="js/lib/jquery-1.8.3.js"></script>
-    <script type="application/javascript" src="js/lib/jquery.mobile-1.2.0.min.js"></script>	
+    <script type="application/javascript" src="js/lib/jquery.mobile-1.2.0.min.js"></script>
 	<script type="application/javascript" src="js/lib/underscore.js"></script>
 	<script type="application/javascript" src="js/lib/backbone.js"></script>
-	<script type="application/javascript" src="js/views/app-view.js"></script>
-	<script type="application/javascript" src="js/views/booking-view.js"></script>	
 	<script type="application/javascript" src="js/models/booking-model.js"></script>
 	<script type="application/javascript" src="js/models/schedule-collection.js"></script>	
+	<script type="application/javascript" src="js/views/booking-list-view.js"></script>
+	<script type="application/javascript" src="js/views/booking-view.js"></script>
+	<script type="application/javascript" src="js/views/booking-details-view.js"></script>
+	<script type="application/javascript" src="js/routers/app-router.js"></script>	
+	
 	<script type="text/template" id="booking_template">
-	    <li data-theme="c">
-            <a href="#" data-transition="slide">
+			<a href="#healthcareFacilities/<%= healthcareFacility %>/bookings/<%= bookingId %>" data-transition="slide">
                 <%= startTimeInclusive %> - <%= purpose %>
             </a>
-        </li>
 	</script>
-	<script type="text/template" id="booking_detail_template">
-		<label>bookingId</label><%= bookingId %>
-		<label>startTimeInclusive</label>
-		<label>endTimeExclusive</label><%= endTimeExclusive %>
-		bookingId: '',
-		healthCareFacility: '',
-		healthcareFacilityName: '',
-		performer: '',
-		performerName: '',
-		purpose: '',
-		reason: '',
-		startTimeInclusive: '',
-		endTimeExclusive: '',
-		careType: '',
-		careTypeName: '',
-		timeType: '',
-		timeTypeName: '',
-		isInvitation: '',
-		rebookingAllowed: ''
+	
+	<script type="text/template" id="booking_list_template">
+        <div data-theme="a" data-role="header">
+            <h3>
+                My Healthcare Calendar
+            </h3>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                <li data-role="list-divider" role="heading">
+                    Bookings
+                </li>
+            </ul>
+            <a id="fetch" class="fetch-bookings" data-role="button" href="#">
+                Fetch bookings
+            </a>
+        </div>
+	</script>
+	
+	<script type="text/template" id="booking_details_template">
+	    <div data-theme="a" data-role="header">
+	        <h3>
+	            Booking details
+	        </h3>
+	        <div data-role="navbar" data-iconpos="left">
+	            <ul>
+	                <li>
+	                    <a href="#main" data-transition="slide" data-direction="reverse" data-theme="" data-icon="back">
+	                        Back
+	                    </a>
+	                </li>
+	            </ul>
+	        </div>
+	    </div>
+	    <div data-role="content" id="bookingDetails">        
+			<div class="ui-grid-a">	
+				<div class="ui-block-a">When</div>
+	            <div class="ui-block-b"><%= startTimeInclusive %> - <%= endTimeExclusive %></div>
+	            <div class="ui-block-a">Performer</div>
+	            <div class="ui-block-b"><%= performerName %></div>
+				<div class="ui-block-a">Purpose</div>
+	            <div class="ui-block-b"><%= purpose %></div>
+
+			    <div class="ui-block-a">Healthcare Facility</div>
+	            <div class="ui-block-b"><%= healthcareFacilityName %></div>
+
+	            <div class="ui-block-a">Performer</div>
+	            <div class="ui-block-b"><%= performerName %></div>
+				<div class="ui-block-a">Reason</div>
+	            <div class="ui-block-b"><%= reason %></div>
+				<div class="ui-block-a">Care type</div>
+	            <div class="ui-block-b"><%= careTypeName %></div>
+				<div class="ui-block-a">Time type</div>
+	            <div class="ui-block-b"><%= timeTypeName %></div>
+				<div class="ui-block-a">Rebooking allowed</div>
+	            <div class="ui-block-b"><%= rebookingAllowed %></div>				
+	        </div>
+	    </div>
 	</script>
     <body>
         <!-- Home -->
-        <div data-role="page" id="page1">
-            <div data-theme="a" data-role="header">
-                <h3>
-                    My Healthcare Calendar
-                </h3>
-            </div>
-            <div data-role="content">
-                <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                    <li data-role="list-divider" role="heading">
-                        Bookings
-                    </li>
-					<div id="calendar">
-					</div>
-                </ul>
-                <a id="fetch" class="fetch-bookings" data-role="button" href="#page1">
-                    Fetch bookings
-                </a>
-            </div>
+        <div data-role="page" id="bookingList">
         </div>
+
+		<div data-role="page" id="bookingDetails">
+		</div>
+    	
 		<script type="application/javascript" src="js/app.js"></script>
     </body>
 </body>

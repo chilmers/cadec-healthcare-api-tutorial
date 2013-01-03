@@ -8,9 +8,11 @@ var app = app || {};
 
 	// The collection of bookings is backed by *localStorage* instead of a remote
 	// server.
-	var BookingList = Backbone.Collection.extend({
+	BookingList = Backbone.Collection.extend({
 		// Reference to this collection's model.
 		model: app.Booking,
+		
+		//localStorage: new Store("healthcare-app-booking-store"),
 		
 		url: 'http://localhost:8080/api/bookings',
 		
@@ -33,6 +35,18 @@ var app = app || {};
 		// Bookings are sorted by their original insertion order.
 		comparator: function( todo ) {
 			return todo.get('order');
+		},
+		
+		getBooking: function(healthcareFacilityId, bookingId) {
+			var matchingBookingArray = this.where(
+				{healthcareFacility: healthcareFacilityId,
+				 bookingId: bookingId
+				});
+			if (matchingBookingArray.length > 0) {
+				return matchingBookingArray[0];
+			} else {
+				return null;
+			}	
 		}
 				
 	});

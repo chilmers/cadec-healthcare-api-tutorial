@@ -3,28 +3,27 @@ var app = app || {};
 (function( $ ) {
 	'use strict';
 	
-	app.BookingView = Backbone.View.extend({
+	app.BookingDetailsView = Backbone.View.extend({
 		
-		//... is a list tag.
-		tagName:  'li',
-		attributes: {
-			'data-theme': 'c'
-		},
+		el:  '#bookingDetails',
+		
+		model: null,
 
-		// Cache the template function for a single item.
 		template: null,
 		
 		events: {
 		},
 		
 		initialize: function() {
-			this.template = _.template( $('#booking_template').html() );
+			this.template = _.template( $('#booking_details_template').html() );
 		},
 		
 		// Re-render the booking
 		render: function() {
 			var renderedTemplate = this.template( this.model.toJSON() );
 			this.$el.html( renderedTemplate );
+			this.$el.attr('data-role', 'page');
+			this.$el.trigger('create');
 			return this;
 		}
 	});

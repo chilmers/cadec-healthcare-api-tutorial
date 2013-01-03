@@ -5,7 +5,7 @@ var app = app || {};
 	app.Booking = Backbone.Model.extend({
 		defaults : {
 			bookingId: '',
-			healthCareFacility: '',
+			healthcareFacility: '',
 			healthcareFacilityName: '',
 			performer: '',
 			performerName: '',
