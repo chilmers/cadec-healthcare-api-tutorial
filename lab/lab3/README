@@ -2,6 +2,7 @@ Lab 3
 Objective: Create a simple oauth2 client that obtains an access token and fetches a resource
 
 Task 1 -------------
+Start the third party client
 
 From this folder, run the following
 >cd simple-oauth2-api-client
@@ -14,17 +15,53 @@ Open your browser and point it to http://localhost:8080 to access the applicatio
 Expected outcome:
 
 You will end up at the first page saying that we need to navigate to Mina vårdkontakter in order to authorize usage of the scheduling API.
-
-When you click the link, nothing will happen, yet.
-
+The link is still not working so don't click it yet.
 
 Task 2 -------------
+Requesting authorization
 
-Find the controller method corresponding to http://localhost:8080/ in the Java code.
-Inspect the following code and insert into the controller method to generate the correct URL to the authorization dialog.
+To be able to get authorization from the user, we need to send the user to Mina Vårdkontakter to approve our authorization request.
+This is done by letting the user's browser access the authorization dialog in MVK with a given set of URL parameters.
 
-..... To be continued
 
+
+  Step 1: 
+  Open the OAuth2ClientController.java in your IDE/editor and find the start method which responds to the root (/) of our application.
+
+
+  Step2:
+  The URL to the authorization dialog is incorrect, update it so that it produces a correct URL to the authorization dialog.
+
+  Find the controller method corresponding to http://localhost:8080/ in the Java code.
+  Find the urlToAuthorization variable which at this stage has an incorrect value.
+  Paste this to correctly set the urlToAuthorization variable:
+
+        String urlToAuthorization = API_SERVER_URL 
+        + "/oauth/authorize?"
+        + "client_id=" + DEV_CLIENT_ID
+        + "&response_type=code"
+        + "&scope=CRM_SCHEDULING_READ"
+        + "&state=" + randomState
+        + "&redirect_uri=" + urlEncode(CALLBACK_URL);
+
+
+  The link on the first page (http://localhost:8080/) shall now look something like this:
+
+        http://dev.apigw.minavardkontakter.se/oauth/authorize
+          ?client_id=apitest
+          &response_type=code
+          &scope=CRM_SCHEDULING_READ
+          &state=dc4beb37-4540-4703-b87e-160c8600ff33    (NB! random generated number, different every time)
+          &redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fback-from-authorization
+
+        The URL now says that: 
+          * our client's id is apitest (client_id),
+          * we want to do authorization using authorization code (response_type),
+          * the scope of the authorization is given by CRM_SCHEDULING_READ i.e. read permission on scheduling information (scope),
+          * we have a randomly generated state that is known to the client (state),
+          * and we have a URL encoded callback URL where we want to return to after the authorization which in decoded form is http://localhost:8080/back-from-authorization (redirect_uri).
+
+  The parameters are also described in detail at the SDK site, section 1 (Dirigera om användaren till auktorisations-dialogen i Mina vårdkontakter) on this page: http://sdk.minavardkontakter.se/sv/sdk-api/svenska-anvisningar-for-uppkopling-till-patientdata-apierna/
 
 
 
