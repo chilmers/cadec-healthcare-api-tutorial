@@ -38,13 +38,8 @@ public class OAuth2ClientController {
 		String randomState = UUID.randomUUID().toString();
 		session.setAttribute(STATE_SESSION_KEY, randomState);
 		
-		String urlToAuthorization = API_SERVER_URL 
-				+ "/oauth/authorize?"
-				+ "client_id=" + DEV_CLIENT_ID
-				+ "&response_type=code"
-				+ "&scope=CRM_SCHEDULING_READ"
-				+ "&state=" + randomState
-				+ "&redirect_uri=" + urlEncode(CALLBACK_URL);
+	    // TASK 2, STEP 2
+		String urlToAuthorization = "[REPLACE ME WITH URL TO AUTHORIZATON DIALOG]";
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("start");
@@ -54,11 +49,10 @@ public class OAuth2ClientController {
 	
 	@RequestMapping("/back-from-authorization")
 	public ModelAndView backFromAuthorization(String code, String state, HttpSession session) {
-		String stateFromSession = (String) session.getAttribute(STATE_SESSION_KEY);
-		if (StringUtils.isBlank(state) || !state.equals(stateFromSession)) {
-			throw new RuntimeException("The state did not match! The session might have timed out or the " +
-					"authorization might have been initialized by an unknown party.");
-		}
+	    
+	    // TASK 3, STEP 1
+	    // ---- ADD CODE FOR VERIFYING STATE HERE ----
+	    
 		// Use the authorization code we just got to get an access token
 		String accessToken = fetchAccessToken(code, state);
 		// Store the access token in the session for later use
@@ -93,16 +87,9 @@ public class OAuth2ClientController {
 	 * @return the received access token
 	 */
 	private String fetchAccessToken(String authorizationCode, String state) {
-		RestTemplate tokenEndpoint = new RestTemplate();
-		MultiValueMap<String, String> headers = new HttpHeaders();
-		// In the development environment we use basic authentication instead of SSL certificates
-		headers.set("Authorization", calculateBasicAuthHeader(DEV_CLIENT_ID, DEV_CLIENT_PASSWORD) );
-		HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
-		ResponseEntity<AccessToken> tokenEnpointResponse = tokenEndpoint.exchange(API_SERVER_URL 
-				+ "/oauth/token?grant_type=authorization_code&code={1}&state={2}&redirect_uri={3}", 
-				HttpMethod.POST, requestEntity, AccessToken.class, 
-				authorizationCode, state, CALLBACK_URL); // no need to URL encode CALLBACK_URL here since RestTemplate does this.
-		return tokenEnpointResponse.getBody().getAccessToken();
+	    // TASK 3, STEP 2
+	    // ---- USE CODE FOR FETCHING THE ACCESS TOKEN FROM THE TOKEN ENDPOINT ----
+	    return "fooooooo-baaaar-token";
 	}
 	
 	/**
@@ -111,13 +98,9 @@ public class OAuth2ClientController {
 	 * @return the schedule of this patient as json
 	 */
 	private String fetchSchedule(String accessToken) {
-		RestTemplate scheduleEndpoint = new RestTemplate();
-		MultiValueMap<String, String> headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + accessToken );
-		HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
-		ResponseEntity<String> scheduleEnpointResponse = scheduleEndpoint.exchange(API_SERVER_URL + "/crm/scheduling/v1/schedule", 
-				HttpMethod.GET, requestEntity, String.class);
-		return scheduleEnpointResponse.getBody();
+	    // TASK 4
+	    // ---- APPLY CODE USING THE ACCESS TOKEN FOR FETCHING THE SCHEDULE ----
+	    return "[{foo: bar}]";
 	}
 	
 	/**
