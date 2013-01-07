@@ -1,8 +1,11 @@
-
-
-
-CURL on Windows
-http://curl.haxx.se/gknw.net/7.28.1/dist-w32/curl-7.28.1-rtmp-ssh2-ssl-sspi-zlib-idn-static-bin-w32.zip
-
-CURL on Mac OS X
-Pre-installed
+Prerequisites:
+* JDK 1.7
+* Maven 3.x
+* JAVA_HOME environment variable set to JDK 1.7 home folder
+* BankID client (https://install.bankid.com/)
+* Test certificates/IDs for BankID (http://www.bankid.com/Global/wwwbankidcom/RP/Test%20BankIDn.zip eller http://sdk.minavardkontakter.se/wp-content/uploads/2012/04/Test-E-leg.zip)
+* cURL
+  - on Windows (http://curl.haxx.se/gknw.net/7.28.1/dist-w32/curl-7.28.1-rtmp-ssh2-ssl-sspi-zlib-idn-static-bin-w32.zip)
+  - on Mac OS X (Pre-installed)
+* Your favorite Maven enabled IDE/code editor (e.g. Eclipse with M2E plugin)
+* Text editor of choice (e.g. TextMate, Sublime, Vim, UltraEdit ...)
