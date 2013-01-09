@@ -10,40 +10,19 @@ var app = app || {};
 		
 		template: _.template( $('#booking_list_entry_template').html() ),
 		
+		
 		events: {
-			'click #fetch': 'fetchSchedule',
-			//'tap a#fetch': 'fetchSchedule' // the tap event can be used on mobile devices
+			
+			'click #fetch': 'fetchSchedule',        // ACTIVATE ME!!!!!
+			
+			// for mobile devices you could use the tap event instead of click
 		},
 		
 		initialize: function() {
 		},
 		
 		fetchSchedule: function() {
-			$.mobile.loading( 'show', {
-				text: 'Loading bookings',
-				textVisible: true,
-			});
-			app.Schedule.reset();
-			app.Schedule.fetch({
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
-				}
-			})
-			.done(
-				// Use jQuery proxy to make sure that the event callback function gets correct "this" context
-				$.proxy(function() {
-					// on success we want to render the bookings list
-					this.render();
-					// and update the text on the fetch button to "Update bookings"
-					$("a#fetch .ui-btn-text").html("Update bookings");
-				}, this)
-			)
-		    .fail(function() { 
-				alert("fetch error");
-			})
-			.always( function() {
-				$.mobile.loading('hide');
-			});
+			alert("All your base are belong to us!");
 		},
 		
 		render: function() {
