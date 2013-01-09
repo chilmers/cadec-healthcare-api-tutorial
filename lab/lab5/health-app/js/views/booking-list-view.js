@@ -2,18 +2,13 @@ var app = app || {};
 
 (function( $ ) {
 	'use strict';
-	
-	// The Application
-	// ---------------
 
-	// Our overall **AppView** is the top-level piece of UI.
 	app.BookingListView = Backbone.View.extend({
-
-		// Instead of generating a new element, bind to the existing skeleton of
-		// the App already present in the HTML.
+		
+		// The element of the booking list view has id bookingList
 		el: '#bookingList',
 		
-		template: null,
+		template: _.template( $('#booking_list_entry_template').html() ),
 		
 		events: {
 			'click a#fetch': 'fetchSchedule',
@@ -21,46 +16,52 @@ var app = app || {};
 		},
 		
 		initialize: function() {
-			this.template = _.template( $('#booking_list_template').html() );
-			app.Schedule.on( 'add', this.addOne, this );
 		},
 		
 		fetchSchedule: function() {
+			$.mobile.loading( 'show', {
+				text: 'Loading bookings',
+				textVisible: true,
+				theme: 'a'
+			});
 			app.Schedule.reset();
 			app.Schedule.fetch({
-				beforeSend: function (xhr) { 
-					xhr.setRequestHeader ("Authorization", "Basic a2FsbGVrdWxhOnNlY3JldA=="); 
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
 				}
 			})
-			.done($.proxy(function() { 
-				this.addAll();
-					}, this))
+			.done(
+				// Use jQuery proxy to make sure that the function gets correct "this" context
+				$.proxy(function() {
+					// on success we want to render the bookings list
+					this.render();
+					// and update the text on the fetch button to "Update bookings"
+					$("a#fetch .ui-btn-text").html("Update bookings");
+				}, this)
+			)
 		    .fail(function() { 
 				alert("fetch error");
+			})
+			.always( function() {
+				$.mobile.loading('hide');
 			});
 		},
 		
 		render: function() {
-			var renderedTemplate = this.template();
-			this.$el.html( renderedTemplate );
-			this.$el.attr('data-role', 'page');
-			this.$el.trigger('create');
+			// Remove old list entries, but not the list header, i.e. only the buttons
+			this.$el.find('#bookingListContent li.ui-btn').remove();
+			// Send each of the bookings in the Schedule collection to the addBooking function
+			app.Schedule.each(this.addBooking, this);
+			// Make jQuery Mobile refresh the list view
+			this.$el.find('#bookingListContent').listview('refresh');
 			return this;
 		},
 
-		// Add a single todo item to the list by creating a view for it, and
-		// appending its element to the `<ul>`.
-		addOne: function( booking ) {
-			var view = new app.BookingView({ model: booking });
-			var bookingView = view.render();
-			$('ul.ui-listview').append( view.el ).listview('refresh');
+		addBooking: function( booking ) {
+			var view = new app.BookingListEntryView({ model: booking });
+			view.render();
+			this.$el.find('#bookingListContent').append( view.el );
 		},
-
-		// Add all items in the **Schedule** collection at once.
-		addAll: function() {
-			$('ul.ui-listview ui-btn').html('');
-			app.Schedule.each(this.addOne, this);
-		},		
 			
 	});
 	

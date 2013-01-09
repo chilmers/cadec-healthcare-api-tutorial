@@ -5,27 +5,34 @@ var app = app || {};
 	app.Router = Backbone.Router.extend({
 		routes: {
     		"healthcareFacilities/:healthcareFacilityId/bookings/:bookingId": "bookingDetails",
-			"main": "main"
+			"main": "main",
+			"logout": "logout"
   		},
 
   		bookingDetails: function(healthcareFacilityId, bookingId) {
+			if(!app.MainView) {
+				return
+			}
 			var booking = app.Schedule.getBooking(healthcareFacilityId, bookingId);
 	      	var bookingDetailsView = new app.BookingDetailsView({ model: booking });
 			bookingDetailsView.render();
-	        $.mobile.changePage(bookingDetailsView.$el, {changeHash:true, transition:'slide', reloadPage: true});
-			bookingDetailsView.$el.trigger('create');
+			$.mobile.changePage("#bookingDetails", {changeHash:false, transition:'slide'});
   		},
 
   		main: function() {
-			// Kick things off by rendering the first page of the app
-			//var bookingListView = new app.BookingListView();
-			//app.MainView.render();	
-	        $.mobile.changePage(app.MainView.$el, {changeHash:false, transition:'slide', reverse: true});
-  		}
+			if(app.MainView) {
+	        	$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'slide', reverse: true});
+			}
+  		},
+
+		logout: function() {
+			app.Credentials.clear();
+			$.mobile.changePage("#login", {changeHash:true, dataUrl:'#login', transition:'flip', reverse: true});
+		}
 		
 	});
 	
 	app.Router = new app.Router();
-	Backbone.history.start();
+	Backbone.history.start({ silent : true });
 
 }(jQuery));

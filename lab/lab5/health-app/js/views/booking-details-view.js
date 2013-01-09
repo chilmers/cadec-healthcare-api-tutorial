@@ -5,7 +5,7 @@ var app = app || {};
 	
 	app.BookingDetailsView = Backbone.View.extend({
 		
-		el:  '#bookingDetails',
+		el:  '#bookingDetailsView',
 		
 		model: null,
 
@@ -22,8 +22,6 @@ var app = app || {};
 		render: function() {
 			var renderedTemplate = this.template( this.model.toJSON() );
 			this.$el.html( renderedTemplate );
-			this.$el.attr('data-role', 'page');
-			this.$el.trigger('create');
 			return this;
 		}
 	});
