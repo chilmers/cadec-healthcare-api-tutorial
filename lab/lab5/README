@@ -1,0 +1,69 @@
+Lab 5
+Objective: Connect the My Healthcare Calendar app to the backend
+
+
+Prerequisites:
+
+	Since we are to connect an app to the backend we need the backend from lab4 to be running.
+	Go to lab4/solution/simple-app-backend and run
+
+		mvn jetty:run
+	
+	Also make sure that you have browsed to http://localhost:8080 and authorized access to the SDK API.
+
+
+Task 1 --------
+
+	Go to the folder health-app and open the index.html in a browser. 
+	Use preferably Firefox or Chrome, IE might not work since it is going their own ways. http://bugs.jquery.com/ticket/8283)
+	
+	You will end up at the login page but if you try to login you will notice that this doesn't work.
+	
+	The strategy is to check the credentials given using the /api/loginstatus endpoint.
+
+	To do this we need to setup the url to the login status endpoint in the credentials-model.js 
+	which is used as a model in login-view.js and call the fetch method (which updates the model from the url) 
+	on the model when the login button is clicked in the view.
+	
+	Step 1) Set the correct URL
+
+		Open credentials-model.js and exchange the URL with the one below.
+	
+			url: 'http://localhost:8080/api/loginstatus',
+	
+	
+	Step 2) Update the model with data from the API when the login button is clicked
+	
+		Open login-view.js and find the login function.
+		The login view uses the credentials model as its' model.
+		We need to update the model by calling the method fetch which is a Backbone method that uses jQuery's ajax capabilities
+		to fetch the url given in the model and update the model with the fields in the returned JSON object.
+		Since Backbone use jQuery's AJAX capabilities we can also add methods like beforeSend to alter the request 
+		before it is sent, just as in jQuery. We use this to set the basic auth header as you will notice below.
+		
+		To call fetch you need to exchange some of the existing code in the login function of the login view with the one below:
+	
+	// Fill the model (i.e. app.Credentials) with loginstatus information
+	this.model.fetch({
+		success: $.proxy(function(model, response, options) {
+					if (model.isAuthenticatedWithRole('ROLE_USER')) {
+						this.reset();
+						$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'flip'});
+					} else {
+				     alert("Not logged in, try again"); 
+					}
+				 }, this),
+		error: function () { 
+			     alert("Not logged in, try again"); 
+			   },
+		beforeSend: function (xhr) {
+						xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
+					}
+	})
+	.always( function() {
+		$.mobile.loading('hide');
+	});
+	
+Task 2 --------------
+	
+	
