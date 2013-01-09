@@ -9,3 +9,4 @@ Prerequisites:
   - on Mac OS X (Pre-installed)
 * Your favorite Maven enabled IDE/code editor (e.g. Eclipse with M2E plugin)
 * Text editor of choice (e.g. TextMate, Sublime, Vim, UltraEdit ...)
+* Firefox ver>=17 with Firebug or Chrome ver>=23
