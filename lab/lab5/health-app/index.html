@@ -9,67 +9,12 @@
 
     <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.2.0.min.css" />
     <link rel="stylesheet" href="css/app.css" />
-    <style>
-        /* App custom styles */
-    </style>
+
 	<!--[if IE]>
 	<script src="assets/ie.js"></script>
 	<![endif]-->
 </head>
-<body class="ui-overlay-b">
-
-	<!-- Template for an entry in the booking list -->
-	<script type="text/template" id="booking_list_entry_template">
-			<a href="#healthcareFacilities/<%= healthcareFacility %>/bookings/<%= bookingId %>" data-transition="slide">
-                <%= startTimeInclusive %> - <%= purpose %>
-            </a>
-	</script>
-
-	<!-- Template for booking details content -->
-	<script type="text/template" id="booking_details_template">       
-			<div class="ui-grid-b ui-bar ui-bar-c">
-				<div class="ui-block-a">When</div>
-					<div class="ui-block-b"><%= startTimeInclusive %> - <%= endTimeExclusive %></div>
-	            <div class="ui-block-a">Performer</div>
-	            	<div class="ui-block-b"><%= performerName %></div>
-				<div class="ui-block-a">Purpose</div>
-	            	<div class="ui-block-b"><%= purpose %></div>
-			    <div class="ui-block-a">Healthcare Facility</div>
-	            	<div class="ui-block-b"><%= healthcareFacilityName %></div>
-	            <div class="ui-block-a">Performer</div>
-	            	<div class="ui-block-b"><%= performerName %></div>
-				<div class="ui-block-a">Reason</div>
-	            	<div class="ui-block-b"><%= reason %></div>
-				<div class="ui-block-a">Care type</div>
-	            	<div class="ui-block-b"><%= careTypeName %></div>
-				<div class="ui-block-a">Time type</div>
-	            	<div class="ui-block-b"><%= timeTypeName %></div>
-				<div class="ui-block-a">Rebooking allowed</div>
-	            	<div class="ui-block-b"><%= rebookingAllowed %></div>				
-	        </div>
-	</script>
-	
-	<!-- External JS Libraries -->
-	<script type="application/javascript" src="js/lib/jquery-1.8.3.js"></script>
-	<script type="application/javascript" src="js/jquery-mobile-config.js"></script>    
-	<script type="application/javascript" src="js/lib/jquery.mobile-1.2.0.min.js"></script>
-	<script type="application/javascript" src="js/lib/underscore.js"></script>
-	<script type="application/javascript" src="js/lib/backbone.js"></script>
-	<script type="application/javascript" src="js/lib/phpjs_base64.js"></script>
-
-	<!-- Models and collections -->
-	<script type="application/javascript" src="js/models/credentials-model.js"></script>	
-	<script type="application/javascript" src="js/models/booking-model.js"></script>
-	<script type="application/javascript" src="js/models/schedule-collection.js"></script>	
-
-	<!-- Views -->
-	<script type="application/javascript" src="js/views/login-view.js"></script>
-	<script type="application/javascript" src="js/views/booking-list-entry-view.js"></script>
-	<script type="application/javascript" src="js/views/booking-list-view.js"></script>
-	<script type="application/javascript" src="js/views/booking-details-view.js"></script>
-	
-	<!-- Routers -->
-	<script type="application/javascript" src="js/routers/app-router.js"></script>	
+<body>
 	
 	<!-- Login page/dialog -->
 	<div data-role="page" id="login" data-theme="b" data-content-theme="b">
@@ -126,6 +71,60 @@
     	<div data-role="content" id="bookingDetailsView">
     	</div>
 	</div>
+	
+
+	<!-- Template for an entry in the booking list -->
+	<script type="text/template" id="booking_list_entry_template">
+			<a href="#healthcareFacilities/<%= healthcareFacility %>/bookings/<%= bookingId %>" data-transition="slide">
+                <%= startTimeInclusive %> - <%= purpose %>
+            </a>
+	</script>
+
+	<!-- Template for booking details content -->
+	<script type="text/template" id="booking_details_template">       
+			<div class="ui-grid-b ui-bar ui-bar-c">
+				<div class="ui-block-a">When</div>
+					<div class="ui-block-b"><%= startTimeInclusive %> - <%= endTimeExclusive %></div>
+	            <div class="ui-block-a">Performer</div>
+	            	<div class="ui-block-b"><%= performerName %></div>
+				<div class="ui-block-a">Purpose</div>
+	            	<div class="ui-block-b"><%= purpose %></div>
+			    <div class="ui-block-a">Healthcare Facility</div>
+	            	<div class="ui-block-b"><%= healthcareFacilityName %></div>
+	            <div class="ui-block-a">Performer</div>
+	            	<div class="ui-block-b"><%= performerName %></div>
+				<div class="ui-block-a">Reason</div>
+	            	<div class="ui-block-b"><%= reason %></div>
+				<div class="ui-block-a">Care type</div>
+	            	<div class="ui-block-b"><%= careTypeName %></div>
+				<div class="ui-block-a">Time type</div>
+	            	<div class="ui-block-b"><%= timeTypeName %></div>
+				<div class="ui-block-a">Rebooking allowed</div>
+	            	<div class="ui-block-b"><%= rebookingAllowed %></div>				
+	        </div>
+	</script>
+	
+	<!-- External JS Libraries -->
+	<script type="application/javascript" src="js/lib/jquery-1.8.3.js"></script>
+	<script type="application/javascript" src="js/jquery-mobile-config.js"></script>    
+	<script type="application/javascript" src="js/lib/jquery.mobile-1.2.0.min.js"></script>
+	<script type="application/javascript" src="js/lib/underscore.js"></script>
+	<script type="application/javascript" src="js/lib/backbone.js"></script>
+	<script type="application/javascript" src="js/lib/phpjs_base64.js"></script>
+
+	<!-- Models and collections -->
+	<script type="application/javascript" src="js/models/credentials-model.js"></script>	
+	<script type="application/javascript" src="js/models/booking-model.js"></script>
+	<script type="application/javascript" src="js/models/schedule-collection.js"></script>	
+
+	<!-- Views -->
+	<script type="application/javascript" src="js/views/login-view.js"></script>
+	<script type="application/javascript" src="js/views/booking-list-entry-view.js"></script>
+	<script type="application/javascript" src="js/views/booking-list-view.js"></script>
+	<script type="application/javascript" src="js/views/booking-details-view.js"></script>
+	
+	<!-- Routers -->
+	<script type="application/javascript" src="js/routers/app-router.js"></script>	
    	
 	<!-- The main script of the app that makes the app start -->
 	<script type="application/javascript" src="js/app.js"></script>
