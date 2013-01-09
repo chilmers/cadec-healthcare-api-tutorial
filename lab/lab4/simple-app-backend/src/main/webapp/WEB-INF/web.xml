@@ -40,14 +40,14 @@
 	</listener>
   
     <filter>
-  		<description>Adds cross domain flags to the response</description>
+  		<description>Adds cross domain flags to the response (Cross Origin Resource Sharing/CORS)</description>
   		<filter-name>responseHeaderFilter</filter-name>
   		<filter-class>se.callistaenterprise.tutorial.healthcare.app.backend.filters.ResponseHeaderFilter</filter-class>
   	</filter>
   	
   	<filter-mapping>
   		<filter-name>responseHeaderFilter</filter-name>
-  		<url-pattern>/*</url-pattern>
+  		<url-pattern>/api/*</url-pattern>
   	</filter-mapping>
   
   	<filter>

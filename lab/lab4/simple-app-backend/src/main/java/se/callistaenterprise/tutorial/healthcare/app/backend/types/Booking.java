@@ -7,7 +7,7 @@ public class Booking {
 
 	private String bookingId;
 	
-	private String healthCareFacility;
+	private String healthcareFacility;
 	private String healthcareFacilityName;
 	
 	private String performer;
@@ -36,12 +36,12 @@ public class Booking {
 		this.bookingId = bookingId;
 	}
 
-	public String getHealthCareFacility() {
-		return healthCareFacility;
+	public String getHealthcareFacility() {
+		return healthcareFacility;
 	}
 
-	public void setHealthCareFacility(String healthCareFacility) {
-		this.healthCareFacility = healthCareFacility;
+	public void setHealthcareFacility(String healthcareFacility) {
+		this.healthcareFacility = healthcareFacility;
 	}
 
 	public String getHealthcareFacilityName() {

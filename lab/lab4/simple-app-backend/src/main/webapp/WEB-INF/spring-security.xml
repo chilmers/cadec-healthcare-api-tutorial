@@ -30,7 +30,9 @@
 	<http use-expressions="true">
 		<!-- Granting all anonymous web requests a particular identity and authorization-->
 		<anonymous/>
-		<!-- Permit all HTTP OPTIONS calls to the API, which is needed for CORS pre-flight -->
+		<!-- Permit all to check ther login status -->
+		<intercept-url pattern="/api/loginstatus" access="permitAll"/>
+		<!-- Permit all HTTP OPTIONS calls to the API, which is needed for Cross Origin Resource Sharing (CORS) pre-flight -->
 		<intercept-url pattern="/api/**" access="permitAll" method="OPTIONS"/>
 		<!-- Permit all to access login page and favicon.ico since browsers asks for that file-->
 		<intercept-url pattern="/login*" access="permitAll"/>
