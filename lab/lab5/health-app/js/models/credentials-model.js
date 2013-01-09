@@ -4,7 +4,9 @@ var app = app || {};
 
 	var Credentials = Backbone.Model.extend({
 		
-		url: 'http://localhost:8080/api/loginstatus',
+		
+		// TASK 1, STEP 1
+		url: 'fixme',
 		
 		defaults : {
 			password: '',

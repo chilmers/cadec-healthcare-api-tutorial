@@ -49,27 +49,15 @@ var app = app || {};
 				text: 'Logging in...',
 				textVisible: true
 			});
-
-			// Fill the model (i.e. app.Credentials) with loginstatus information
-			this.model.fetch({
-				success: $.proxy(function(model, response, options) {
-							if (model.isAuthenticatedWithRole('ROLE_USER')) {
-								this.reset();
-								$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'flip'});
-							} else {
-						     alert("Not logged in, try again"); 
-							}
-						 }, this),
-				error: function () { 
-					     alert("Not logged in, try again"); 
-					   },
-				beforeSend: function (xhr) {
-								xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
-							}
-			})
-			.always( function() {
-				$.mobile.loading('hide');
-			});
+			
+			// TASK 1, STEP 2
+			// CHECK LOGIN STATUS WITH THE API BACKEND USING BASIC AUTH
+			
+			// EXCHANGE FROM HERE...
+			alert("FIX ME!!");
+			$.mobile.loading('hide');
+			// TO HERE
+			
 			
 		}
 	});
