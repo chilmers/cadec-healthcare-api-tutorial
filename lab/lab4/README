@@ -1,7 +1,7 @@
 Lab 4
-Objective: Create an backend that exposes an API for an app
+Objective: Create a backend that exposes an API for an app
 
-First start your server by entering the simple-app-backend folder and run (it will restart on changes)
+First start your server by entering the simple-app-backend folder and start jetty (it will restart on changes to the target folder, e.g. when eclipse compiles code)
   
   mvn jetty:run
 
@@ -14,7 +14,7 @@ Task 1 -----------
   and that all methods in this class responds to /api/**
 
   Now find the getBookings method and inspect the RequestMapping annotation on that one.
-  It says that this method will respond to /bookingsi, which in practice is /api/bookings since we are in the context of our controller.
+  It says that this method will respond to /bookings, which in practice is /api/bookings since we are in the context of our controller.
   It also says that this method shall respond to GET requests.
   The ResponseBody annotation tells Spring MVC to convert the returned value to a suitable HTTP response.
 
