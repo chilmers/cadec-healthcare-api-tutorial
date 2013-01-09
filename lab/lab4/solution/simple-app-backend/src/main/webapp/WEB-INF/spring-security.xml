@@ -28,17 +28,19 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
                         
 	<http use-expressions="true">
-	
-    
-    <!-- TASK 3 -->
-    <!-- SECURE THE APP BACKEND BY FORCING USERS/CLIENTS TO BE  -->
-    <!-- AUTHENTICATED WITH FORM LOGIN OR BASIC AUTH -->
-	
-	
-		<!-- Granting all anonymous web requests a particular identity (anonymousUser) and authorization-->
+		<!-- Granting all anonymous web requests a particular identity and authorization-->
 		<anonymous/>
-        <!-- Permit all users to access everything, we will change this soon... -->
-		<intercept-url pattern="/**" access="permitAll" />
+		<!-- Permit all to check their login status -->
+		<intercept-url pattern="/api/loginstatus" access="permitAll"/>
+		<!-- Permit all HTTP OPTIONS calls to the API, which is needed for Cross Origin Resource Sharing (CORS) pre-flight -->
+		<intercept-url pattern="/api/**" access="permitAll" method="OPTIONS"/>
+		<!-- Permit all to access login page and favicon.ico since browsers asks for that file-->
+		<intercept-url pattern="/login*" access="permitAll"/>
+		<intercept-url pattern="/favicon.ico" access="permitAll"/>
+		<!-- Secure everything else -->
+		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+		<!-- Permit HTTP Basic Authentication, for easy access to the API (NB! should be used along with HTTPS in production systems) -->
+		<http-basic />
 		<!-- Also permit form login -->
 		<form-login login-page="/login" default-target-url="/" authentication-failure-url="/loginfailed" />
 		<!-- Send users to the login page when access is denied -->

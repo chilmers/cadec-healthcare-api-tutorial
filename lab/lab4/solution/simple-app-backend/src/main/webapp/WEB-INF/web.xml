@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+      Copyright 2012 Callista Enterprise AB
+
+      This file is part of Healthcare API Tutorial
+
+      Healthcare API Tutorial is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      Healthcare API Tutorial is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with Healthcare API Tutorial; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+  	<display-name>Tutorial App Backend</display-name>
+
+	<context-param>
+		<description>Spring's root context, shared by all Servlets and Filters</description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-security.xml, /WEB-INF/spring-db.xml</param-value>
+	</context-param>
+
+	<listener>
+		<description>Servlet context listener that loads the root context upon servlet context initialization.</description>
+	  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+  
+    <filter>
+  		<description>Adds cross domain flags to the response (Cross Origin Resource Sharing/CORS)</description>
+  		<filter-name>responseHeaderFilter</filter-name>
+  		<filter-class>se.callistaenterprise.tutorial.healthcare.app.backend.filters.ResponseHeaderFilter</filter-class>
+  	</filter>
+  	
+  	<filter-mapping>
+  		<filter-name>responseHeaderFilter</filter-name>
+  		<url-pattern>/api/*</url-pattern>
+  	</filter-mapping>
+  
+  	<filter>
+  		<description>The spring security Filter chain</description>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+  	<servlet>
+  		<description>The Spring MVC dispatcher Servlet</description>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+  
+</web-app>

@@ -2,10 +2,6 @@ package se.callistaenterprise.tutorial.healthcare.app.backend.controllers;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -44,33 +40,32 @@ public class AppAPIController {
 	 * POJOS to JSON.
 	 * @return A response consisting of a list of booking POJOs to be transformed to JSON.
 	 */
-	  @RequestMapping(method = RequestMethod.GET, value="/bookings")
-	  public @ResponseBody String getBookings() {
-
-	      // TASK 1
-	      // ---- ALTER THIS METHOD AND ANNOTATIONS TO RETURN BOOKINGS AS JSON ----
-
-	      return "HELLO CADEC";
-	  }
+	@RequestMapping(method = RequestMethod.GET, value="/bookings", produces="application/json")  
+	public @ResponseBody List<Booking> getBookings() {
+		// Get the logged in user
+		User user  = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// Find the stored access token for the logged in user
+		UserAccessToken userAccessToken = userAccessTokenRepository.findByUser(user.getUsername());
+		// Use the access token to fetch the bookings of the logged in user
+		return fetchSchedule(userAccessToken.getAccessToken()).getBookings();
+	}
 	
 	/**
 	 * Use RestTemplate to fetch a patient schedule
 	 * @param accessToken the access token for this patients scheduling information
 	 * @return the schedule of this patient as json
 	 */
-	private Bookings fetchSchedule(String accessToken) {
-	    
-        // TASK 2, STEP 1
-        // ---- ALTER THIS METHOD TO RETRIEVE SCHEDULE DATA ---- 
-	    // ---- FROM THE SDK INSTEAD OF RETURNING DUMMY DATA ----
-	    
-	    // Dummy bookings data
-	    Bookings bookings = new Bookings();
-	    Booking b = new Booking();
-	    b.setPurpose("dummy booking");
-	    bookings.getBookings().add(b);
-	    return bookings;
+	private Bookings fetchSchedule(String accessToken) {		
+		RestTemplate scheduleEndpoint = new RestTemplate();
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + accessToken );
+		HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
+		// RestTemplate uses Jackson to map the JSON response to POJOS with Jackson annotations. See Bookings.java
+		ResponseEntity<Bookings> scheduleEnpointResponse = scheduleEndpoint.exchange(API_SERVER_URL + "/crm/scheduling/v1/schedule", 
+				HttpMethod.GET, requestEntity, Bookings.class);
+		return scheduleEnpointResponse.getBody();
 	}
+	
 	
 	/**
 	 * Checks the login status and returns a json object with
