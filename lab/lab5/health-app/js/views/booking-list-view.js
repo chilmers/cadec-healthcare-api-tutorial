@@ -12,7 +12,7 @@ var app = app || {};
 		
 		events: {
 			'click #fetch': 'fetchSchedule',
-			//'tap a#fetch': 'fetchSchedule'
+			//'tap a#fetch': 'fetchSchedule' // the tap event can be used on mobile devices
 		},
 		
 		initialize: function() {
@@ -30,7 +30,7 @@ var app = app || {};
 				}
 			})
 			.done(
-				// Use jQuery proxy to make sure that the function gets correct "this" context
+				// Use jQuery proxy to make sure that the event callback function gets correct "this" context
 				$.proxy(function() {
 					// on success we want to render the bookings list
 					this.render();

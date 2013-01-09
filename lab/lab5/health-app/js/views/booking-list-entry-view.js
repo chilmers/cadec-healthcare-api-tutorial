@@ -19,7 +19,7 @@ var app = app || {};
 		initialize: function() {
 		},
 		
-		// Render the booking
+		// Render the booking list entry
 		render: function() {
 			var renderedTemplate = this.template( this.model.toJSON() );
 			this.$el.html( renderedTemplate );
