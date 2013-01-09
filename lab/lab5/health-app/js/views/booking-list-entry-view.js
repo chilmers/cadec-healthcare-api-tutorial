@@ -7,11 +7,11 @@ var app = app || {};
 		
 		tagName:  'li',
 
-		attributes: {
-			'data-theme': 'c'
-		},
-
 		template: _.template( $('#booking_list_entry_template').html() ),
+		
+		attributes: {
+			 'data-theme': 'c'
+		},
 		
 		events: {
 		},

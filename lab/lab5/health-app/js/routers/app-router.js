@@ -1,16 +1,18 @@
 var app = app || {};
 
 (function( $ ) {
+	'use strict';	
 	
 	app.Router = Backbone.Router.extend({
 		routes: {
     		"healthcareFacilities/:healthcareFacilityId/bookings/:bookingId": "bookingDetails",
 			"main": "main",
-			"logout": "logout"
+			"logout": "logout",
+			"": "login" // Default route
   		},
 
   		bookingDetails: function(healthcareFacilityId, bookingId) {
-			if(!app.MainView) {
+			if(!app.Credentials.isAuthenticatedWithRole('ROLE_USER')) {
 				return
 			}
 			var booking = app.Schedule.getBooking(healthcareFacilityId, bookingId);
@@ -20,10 +22,20 @@ var app = app || {};
   		},
 
   		main: function() {
-			if(app.MainView) {
+			if(app.Credentials.isAuthenticatedWithRole('ROLE_USER')) {				
 	        	$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'slide', reverse: true});
 			}
   		},
+
+		login: function() {
+			if (!app.MainView) {
+				app.MainView = new app.BookingListView();
+			}			
+			if (!app.Credentials.isAuthenticatedWithRole('ROLE_USER')) {
+				app.LoginView = new app.LoginView({model: app.Credentials});
+				app.LoginView.render();
+			}		
+		},
 
 		logout: function() {
 			app.Credentials.clear();
@@ -31,8 +43,5 @@ var app = app || {};
 		}
 		
 	});
-	
-	app.Router = new app.Router();
-	Backbone.history.start({ silent : true });
 
 }(jQuery));

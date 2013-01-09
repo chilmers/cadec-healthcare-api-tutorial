@@ -1,11 +1,10 @@
 var app = app || {};
 
 $(function() {
-	app.MainView = new app.BookingListView();
-	if (!app.Credentials.isLoggedIn) {
-		app.LoginView = new app.LoginView({model: app.Credentials});
-		app.LoginView.render();
-	} else {
-	    $.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'flip'});
-	}
+	// Create our application's main router to handle # URLs
+	app.MainRouter = new app.Router();
+	// Start the routing mechanism and load the default route -> ""
+	Backbone.history.start();
+	// Clear the URL from leftovers and send us to the default route (see app-router.js)
+	app.MainRouter.navigate('#', {trigger:true});
 });

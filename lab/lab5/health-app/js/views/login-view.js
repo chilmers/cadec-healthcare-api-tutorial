@@ -47,29 +47,30 @@ var app = app || {};
 			this.model.set('password', password);
 			$.mobile.loading( 'show', {
 				text: 'Logging in...',
-				textVisible: true,
-				theme: 'a'
-			});			
-			$.ajax({
-				url: 'http://localhost:8080/api/loginstatus',
-				success: $.proxy(function(response, textStatus, jqXHR) {
-					var data = $.parseJSON(response);
-					if (data && data.isAuthenticated === true && data.username != 'anonymousUser' && _.contains(data.roles, 'ROLE_USER')) {
-						this.reset();
-						$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'flip'});
-					} else {
-						alert("Not logged in, try again");
-					}
-				}, this),
-				error: function () {
-					alert("Not logged in, try again");
-				},
-				beforeSend: function (xhr) { 
-					xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
-				}
-			}).always( function() {
+				textVisible: true
+			});
+
+			// Fill the model (i.e. app.Credentials) with loginstatus information
+			this.model.fetch({
+				success: $.proxy(function(model, response, options) {
+							if (model.isAuthenticatedWithRole('ROLE_USER')) {
+								this.reset();
+								$.mobile.changePage("#bookingList", {changeHash:true, dataUrl: '#bookingList', transition:'flip'});
+							} else {
+						     alert("Not logged in, try again"); 
+							}
+						 }, this),
+				error: function () { 
+					     alert("Not logged in, try again"); 
+					   },
+				beforeSend: function (xhr) {
+								xhr.setRequestHeader ("Authorization", "Basic " + app.Credentials.get('basicAuth')); 
+							}
+			})
+			.always( function() {
 				$.mobile.loading('hide');
 			});
+			
 		}
 	});
 	

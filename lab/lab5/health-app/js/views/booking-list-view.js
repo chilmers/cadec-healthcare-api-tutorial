@@ -11,7 +11,7 @@ var app = app || {};
 		template: _.template( $('#booking_list_entry_template').html() ),
 		
 		events: {
-			'click a#fetch': 'fetchSchedule',
+			'click #fetch': 'fetchSchedule',
 			//'tap a#fetch': 'fetchSchedule'
 		},
 		
@@ -22,7 +22,6 @@ var app = app || {};
 			$.mobile.loading( 'show', {
 				text: 'Loading bookings',
 				textVisible: true,
-				theme: 'a'
 			});
 			app.Schedule.reset();
 			app.Schedule.fetch({

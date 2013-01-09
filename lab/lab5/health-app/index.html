@@ -15,9 +15,10 @@
 	<![endif]-->
 </head>
 <body>
+
 	
 	<!-- Login page/dialog -->
-	<div data-role="page" id="login" data-theme="b" data-content-theme="b">
+	<div data-role="page" id="login" data-theme="c" data-content-theme="b">
 	    <div data-theme="b" data-role="header" id="bookingDetailsHeader">
 	        <h3>
 				My Healthcare Calendar
@@ -39,29 +40,28 @@
 	<!-- Static part of Booking List Page, this is the main view of the app-->
 	<div data-role="page" id="bookingList" data-theme="b" data-content-theme="b">        
 		<div data-theme="b" data-role="header">
-	    	<a href="#logout" data-transition="slide" data-direction="reverse" data-theme="b" data-icon="delete" data-role="button">
+	    	<a href="#logout" data-icon="delete" data-role="button">
 				Log out
 			</a>			
             <h3>
                 My Healthcare Calendar
             </h3>
         </div>
-        <div data-role="content">
-            <ul data-role="listview" data-divider-theme="b" data-inset="true" id="bookingListContent">
+
+        <div data-role="content" >
+            <ul data-role="listview" data-inset="true" id="bookingListContent">
                 <li data-role="list-divider" role="heading">
                     Bookings
                 </li>
             </ul>
-            <a id="fetch" class="fetch-bookings" data-role="button" href="#">
-                Fetch bookings
-            </a>
+			<button id="fetch" class="fetch-bookings">Fetch bookings</button>
         </div>	
 	</div>
 
 	<!-- Static part of Booking Details Page -->
 	<div data-role="page" id="bookingDetails" data-theme="b" data-content-theme="b">
 	    <div data-theme="b" data-role="header" id="bookingDetailsHeader">
-        	<a href="#main" data-transition="slide" data-direction="reverse" data-theme="b" data-icon="back" data-role="button">
+        	<a href="#main" data-transition="slide" data-direction="reverse" data-icon="back" data-role="button">
 				Back
 			</a>
 	        <h3>
