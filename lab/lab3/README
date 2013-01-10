@@ -17,6 +17,10 @@ Task 1 -------------
   You will end up at the first page saying that we need to navigate to Mina vårdkontakter in order to authorize usage of the scheduling API.
   The link is still not working so don't click it yet.
 
+
+
+
+
 Task 2 -------------
   Requesting authorization
 
@@ -66,7 +70,12 @@ Task 2 -------------
   All certificates have password 123456qwerty
   You will get a warning that this is unsafe since we are not using HTTPS in the development environment, it is ok to continue at this stage.
 
-Task 3:
+
+
+
+
+
+Task 3 -----------
 Handle the response from the authorization dialog and collect an access token.
 
   Find the code responding to the callback url (/back-from-authorization) in the OAuth2ClientController.java
@@ -96,7 +105,13 @@ Handle the response from the authorization dialog and collect an access token.
       return tokenEnpointResponse.getBody().getAccessToken();
   }
 
-Task 4: Use access token to fetch the user's schedule
+
+
+
+
+
+Task 4 ---------- 
+Use access token to fetch the user's schedule
 
   When you click the fetch-schedule link, an empty schedule will appear.
   We need to use our access token to fetch the schedule.
