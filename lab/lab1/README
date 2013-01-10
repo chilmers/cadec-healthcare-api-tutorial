@@ -3,6 +3,8 @@ Objective: Use curl to manipulate some requests to an API to see how it affects 
 
 
 ------------- Task 1:
+Fetch public data from the HSA API to get information about a healthcare facility
+
 Open a browser and go to the HSA information API at the SDK site: http://sdk.minavardkontakter.se/api/sv/service/hsa-hamta-ett-hsa-objekt
 
 Use the following curl command with verbose output against the HSA data API to fetch details about a health care facility.
@@ -23,6 +25,7 @@ Tip: A line starting with > means it is part of the request, and < means it is p
 Manipulate the curl command and add an Accept header to receive xml or csv instead of json.
 Use the API description at the SDK site to find out acceptable MIME types (i.e. formats) http://sdk.minavardkontakter.se/api/sv/service/hsa-hamta-ett-hsa-objekt
 
-Tip: Request headers are set with the -H flag in curl, e.g. -H"[header name]: [header value]"
+Hint: Request headers are set with the -H flag in curl, e.g. -H"[header name]: [header value]"
+Hint 2: We want to set thh header named Accept
   
  

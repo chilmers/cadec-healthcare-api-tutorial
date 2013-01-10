@@ -8,6 +8,8 @@ There is a development environment which is protected by OAuth 2.0 but possible 
 
 Use curl without any headers to try to access scheduled bookings at http://dev.apigw.minavardkontakter.se/crm/scheduling/v1/schedule
 
+  curl -v http://dev.apigw.minavardkontakter.se/crm/scheduling/v1/schedule
+
 Expected outcome:
 You should get an error saying that you are not authorized.
 
@@ -42,6 +44,8 @@ The access token is set in the Authorization request header with a Bearer prefix
   Authorization: Bearer [access token]
 
 The URL to the sheduled bookings is: http://dev.apigw.minavardkontakter.se/crm/scheduling/v1/schedule
+
+  curl -v -H"Authorization: Bearer d3919a2a-9dcd-11e1-8c70-12313c036113" http://dev.apigw.minavardkontakter.se/crm/scheduling/v1/schedule
 
 Expected outcome: The bookings of the selected fictive person is returned as json.
 You can read more about the API resource you just eused at this page:
