@@ -23,7 +23,7 @@ Prerequisites:
 Task 1 --------
 
 	Go to the folder health-app and open the index.html in a browser. 
-	Use preferably Firefox or Chrome, IE might not work since it is going their own ways. http://bugs.jquery.com/ticket/8283)
+	Use preferably Firefox or Chrome, IE might not work since there are problems with IE and CORS in jQuery. (http://bugs.jquery.com/ticket/8283)
 	
 	You will end up at the login page but if you try to login you will notice that this doesn't work.
 	
@@ -93,15 +93,15 @@ Task 2 --------------
 	
 	Since this is the last task you can either try it yourself or take a look further down for the solution...
 	
-	We need to...
+	We need to... 
 	
-	1) Add a loading wheel showing that we are currently loading the bookings (use $.mobile.loading(command, options) )
+	1) Add a loading wheel showing that we are currently loading the bookings (use $.mobile.loading( 'show',text: 'Loading bookings',textVisible: true}) )
 	2) Call reset on the app.Schedule collection to empty it
 	3) Update app.Schedule to fetch new data from its' URL
-	4) If the fetch was successful we need to render the booking-list, using the data in the collection
+	4) If the fetch was successful we need to render the booking-list, using the data in the collection (Hint: we just did a fetch in the login-view.js) 
 	5) We also want to change the text of the Fetch button to "Update bookings"
 	6) If the fetch fails we want an alert dialog saying that womething went wrong
-	7) Of course we also want to close the loading wheel, both on success or failure.
+	7) Of course we also want to close the loading wheel, both on success or failure. ($.mobile.loading('hide'))
 	
 	Finished!
 	
