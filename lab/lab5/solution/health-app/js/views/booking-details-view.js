@@ -3,23 +3,22 @@ var app = app || {};
 (function( $ ) {
 	'use strict';
 	
-	app.BookingListEntryView = Backbone.View.extend({
+	app.BookingDetailsView = Backbone.View.extend({
 		
-		tagName:  'li',
+		el:  '#bookingDetailsView',
+		
+		model: null,
 
-		template: _.template( $('#booking_list_entry_template').html() ),
-		
-		attributes: {
-			 'data-theme': 'c'
-		},
+		template: null,
 		
 		events: {
 		},
 		
 		initialize: function() {
+			this.template = _.template( $('#booking_details_template').html() );
 		},
 		
-		// Render the booking list entry
+		// Re-render the booking
 		render: function() {
 			var renderedTemplate = this.template( this.model.toJSON() );
 			this.$el.html( renderedTemplate );
