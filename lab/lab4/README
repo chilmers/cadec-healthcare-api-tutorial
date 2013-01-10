@@ -5,6 +5,9 @@ First start your server by entering the simple-app-backend folder and start jett
   
   mvn jetty:run
 
+NB! Access tokens will now be stored in an in memory database, therefore you will need to redo the authorization flow (localhost:8080) each time the server restarts.
+
+
 Task 1 -----------
   Add an endpoint to the API that produces JSON.
 
@@ -50,6 +53,10 @@ Task 1 -----------
   Now try the curl command to retrieve some dummy booking data as json:
 
     curl -v http://localhost:8080/api/bookings
+
+
+
+
 
   
 Task 2 -----------
@@ -120,7 +127,12 @@ Task 2 -----------
       curl -v http://localhost:8080/api/bookings
 
 
-Task 4 ------------
+
+
+
+
+
+Task 3 ------------
   Add security
   
   We now have an API open for everyone to use anonymously, we want to force the users to be logged in.
