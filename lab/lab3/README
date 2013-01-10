@@ -29,7 +29,8 @@ Task 2 -------------
 
 
   Step2:
-  The URL to the authorization dialog is incorrect, update it so that it produces a correct URL to the authorization dialog.
+  The URL to the authorization dialog is incorrect, update it so that it produces a correct URL to the authorization dialog by following
+  the steps.
 
   Find the controller method corresponding to http://localhost:8080/ in the Java code.
   Find the urlToAuthorization variable which at this stage has an incorrect value.
