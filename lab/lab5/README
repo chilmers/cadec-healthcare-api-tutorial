@@ -23,7 +23,7 @@ Prerequisites:
 Task 1 --------
 
 	Go to the folder health-app and open the index.html in a browser. 
-	Use preferably Firefox or Chrome, IE might not work since it is going their own ways. http://bugs.jquery.com/ticket/8283)
+	Use preferably Firefox or Chrome, IE might not work since there are problems with IE and CORS in jQuery. (http://bugs.jquery.com/ticket/8283)
 	
 	You will end up at the login page but if you try to login you will notice that this doesn't work.
 	
