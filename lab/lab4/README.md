@@ -1,15 +1,16 @@
-Lab 4
+#Lab 4
 Objective: Create a backend that exposes an API for an app
 
 First start your server by entering the simple-app-backend folder and start jetty (it will restart on changes to the target folder, e.g. when eclipse compiles code)
-  
+
+~~~~
   mvn jetty:run
+~~~~
 
 NB! Access tokens will now be stored in an in memory database, therefore you will need to redo the authorization flow (localhost:8080) each time the server restarts.
 
 
-Task 1 -----------
-  Add an endpoint to the API that produces JSON.
+##Task 1: Add an endpoint to the API that produces JSON.
 
   Open the file AppAPIController.java.
   We have two annotations on the class, Controller and RequestMapping.
@@ -23,7 +24,9 @@ Task 1 -----------
 
   You can try it with: 
     
+~~~~
     curl -v http://localhost:8080/api/bookings
+~~~~
 
   As for now the method responds with a String and the content type will then be text/plain.
  
@@ -33,6 +36,7 @@ Task 1 -----------
   
   Look at the code below and try to understand what it does, then replace the getBookings method with this:
 
+~~~~
     @RequestMapping(method = RequestMethod.GET, value="/bookings", produces="application/json")
     public @ResponseBody List<Booking> getBookings() {
       // Get the logged in user
@@ -46,30 +50,26 @@ Task 1 -----------
       // Use the access token to fetch the bookings of the logged in user
       return fetchSchedule(accessToken).getBookings();
     }
+~~~~
 
   When we say to Spring MVC that it shall produce application/json along with setting the ResponseBody 
   annotation on the return type it will use Jackson to try to map the returned value into JSON.
 
   Now try the curl command to retrieve some dummy booking data as json:
 
+~~~~
     curl -v http://localhost:8080/api/bookings
+~~~~
 
+##Task 2: Fetch data from the SDK
 
+In lab 3, we used RestTemplate to fetch JSON as a String. RestTemplate can also, with a little help from Jackson, automatically map the received JSON into Java objects. We now want to fetch the schedule from the SDK and map the response to or Bookings class.
 
+###Step 1 Use RestTemplate to fetch bookings from the SDK 
 
+Open AppAPIController.java and alter the fetchSchedule method to look as follows:
 
-  
-Task 2 -----------
-  Fetch data from the SDK
-
-  In lab 3, we used RestTemplate to fetch JSON as a String.
-  RestTemplate can also, with a little help from Jackson, automatically map the 
-  received JSON into Java objects.
-  We now want to fetch the schedule from the SDK and map the response to or Bookings class.
-
-  Step 1) Use RestTemplate to fetch bookings from the SDK 
-    Open AppAPIController.java and alter the fetchSchedule method to look as follows:
-
+~~~~
     private Bookings fetchSchedule(String accessToken) {    
         RestTemplate scheduleEndpoint = new RestTemplate();
         MultiValueMap<String, String> headers = new HttpHeaders();
@@ -80,23 +80,19 @@ Task 2 -----------
             HttpMethod.GET, requestEntity, Bookings.class);
         return scheduleEnpointResponse.getBody();
     }
+~~~~
 
-    As you can see from the code above we are now telling the RestTemplate (scheduleEnpoint) to exchange information with the
-    server and map the response body to the Bookings class.
-    The solution will still not work, we also need the next step to make it work.
+As you can see from the code above we are now telling the RestTemplate (scheduleEnpoint) to exchange information with the server and map the response body to the Bookings class. The solution will still not work, we also need the next step to make it work.
 
-  Step 2) Map JSON to Java objects using annotations
+###Step 2 Map JSON to Java objects using annotations
  
-    Jackson does a good job of mapping JSON to Java objects automatically
-    as long as the structure and the property names of the JSON and the Java objects are identical. 
-    If property names differ between the JSON and the Java objects we can help Jackson
-    by annotating our Java class with the correct name to map a specific field against. 
+Jackson does a good job of mapping JSON to Java objects automatically as long as the structure and the property names of the JSON and the Java objects are identical. If property names differ between the JSON and the Java objects we can help Jackson by annotating our Java class with the correct name to map a specific field against. 
 
-    The SDK returns a property named timeslots where we have used bookings.
-    We want to tell Jackson to map timeslots to bookings.
+The SDK returns a property named timeslots where we have used bookings. We want to tell Jackson to map timeslots to bookings.
 
-    Open the POJO Bookings.java and add JSON annotations to the code to make it look as follows:
+Open the POJO Bookings.java and add JSON annotations to the code to make it look as follows:
 
+~~~~
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class Bookings {
 
@@ -114,26 +110,17 @@ Task 2 -----------
       }
 
     }
+~~~~
 
-    We have now told Jackson that the JSON property timeslots shall be mapped to the
-    Java member variable bookings. We have also told Jackson to ignore unkown properties
-    in the JSON to be able to cherry pick the goodies from the JSON structure and ignore 
-    the rest.
+We have now told Jackson that the JSON property timeslots shall be mapped to the Java member variable bookings. We have also told Jackson to ignore unkown properties in the JSON to be able to cherry pick the goodies from the JSON structure and ignore the rest.
 
-    You can now test your API endpoint. 
-    Since our token database is in-memory you probably need to go through the authorization flow again by browsing to http://localhost:8080
-    When you have authorized the access you can test your endpoint by issuing the following curl command.
-    
+You can now test your API endpoint. Since our token database is in-memory you probably need to go through the authorization flow again by browsing to http://localhost:8080 When you have authorized the access you can test your endpoint by issuing the following curl command.
+ 
+~~~~ 
       curl -v http://localhost:8080/api/bookings
+~~~~
 
-
-
-
-
-
-
-Task 3 ------------
-  Add security
+##Task 3: Add security
   
   We now have an API open for everyone to use anonymously, we want to force the users to be logged in.
   For the web pages (i.e. the oauth authorization mechanism) we need a form login and for the API we want 
@@ -144,6 +131,7 @@ Task 3 ------------
   
   Open spring-security.xml (in src/main/webapp/WEB-INF) and replace the <http> element with the code below.
 
+~~~~
   <!-- Allow expressions such as hasRole('myRole') within thsi configuration block. -->
   <http use-expressions="true">
     <!-- Granting all anonymous web requests a particular identity and authorization-->
@@ -168,16 +156,19 @@ Task 3 ------------
     <!-- And use /logout to logout -->
     <logout logout-success-url="/logout" />
   </http>
+~~~~
 
-  We are now intercepting URLs and applying various kinds of access control.
+We are now intercepting URLs and applying various kinds of access control.
 
-  Restart your server and you are ready to test the solution again.
-  1) Browse to http://localhost:8080 and log in as kallekula with password secret.
-  2) Perform the authorization.
-  3) Use curl with basic auth to access your API as kallekula  
+Restart your server and you are ready to test the solution again:
 
+ 1. Browse to http://localhost:8080 and log in as kallekula with password secret.
+ 2. Perform the authorization.
+ 3. Use curl with basic auth to access your API as kallekula  
+
+~~~~
     curl -v -H"Authorization: Basic a2FsbGVrdWxhOnNlY3JldA==" http://localhost:8080/api/bookings
+~~~~
   
-  FYI:
-  Base64Encode("kallekula:secret")  ->  a2FsbGVrdWxhOnNlY3JldA==
+**FYI:** Base64Encode("kallekula:secret")  ->  a2FsbGVrdWxhOnNlY3JldA==
 
