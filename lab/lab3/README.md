@@ -82,9 +82,7 @@ You will get a warning that this is unsafe since we are not using HTTPS in the d
   The authorization dialog has appended some important parameters on the callback URL which are mapped to parameters in the controller method.
   Notice the code and state parameters in the Java method.
 
-###Step 1: Verify the state returned from the authorization dialog by pasting the following code where it says: 
-
----- ADD CODE FOR VERIFYING STATE HERE ----
+###Step 1: Verify the state returned from the authorization dialog by pasting the following code where it says:  ---- ADD CODE FOR VERIFYING STATE HERE ----
 
 ~~~~
     String stateFromSession = (String) session.getAttribute(STATE_SESSION_KEY);
