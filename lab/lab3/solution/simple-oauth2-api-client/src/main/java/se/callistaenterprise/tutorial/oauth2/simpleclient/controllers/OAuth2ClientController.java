@@ -45,10 +45,19 @@ public class OAuth2ClientController {
 				+ "&scope=CRM_SCHEDULING_READ"
 				+ "&state=" + randomState
 				+ "&redirect_uri=" + urlEncode(CALLBACK_URL);
+				
+		String printableUrlToAuthorization = API_SERVER_URL 
+					+ "/oauth/authorize/"
+					+ "	<br/>&nbsp;&nbsp;&nbsp;&nbsp;?client_id=" + DEV_CLIENT_ID
+					+ "	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&response_type=code"
+					+ "	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&scope=CRM_SCHEDULING_READ"
+					+ "	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&state=" + randomState
+					+ "	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&redirect_uri=" + urlEncode(CALLBACK_URL);				
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("start");
 		mav.addObject("urlToAuthorization", urlToAuthorization);
+		mav.addObject("printableUrlToAuthorization", printableUrlToAuthorization);
 		return mav;
 	}
 	

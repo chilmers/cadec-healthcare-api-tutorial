@@ -1,4 +1,4 @@
-<html>
+<!doctype html>
 <body>
 <h2>Welcome to the simple OAuth 2.0 client</h2>
 <p>
@@ -12,7 +12,7 @@ Take a special look at the URL encoded redirect_uri which is the URL we will ret
 When you are ready, click the link to go on with the authorization.<br/> 
 </p>
 
-<a href="${urlToAuthorization}">${urlToAuthorization}</a>
+<a href="${urlToAuthorization}"><h2>${printableUrlToAuthorization}</h2></a>
 
 </body>
 </html>
