@@ -18,7 +18,8 @@ Go to lab4/solution/simple-app-backend and run
 ~~~~
 		mvn jetty:run
 ~~~~	
-	Also make sure that you have browsed to http://localhost:8080 and authorized access to the SDK API.
+
+Also make sure that you have browsed to http://localhost:8080 and authorized access to the SDK API.
 
 
 ##Task 1: 
