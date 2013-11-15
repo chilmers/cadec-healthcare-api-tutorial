@@ -29,11 +29,11 @@ import se.callistaenterprise.tutorial.healthcare.app.backend.types.UserAccessTok
 @RequestMapping("")
 public class OAuth2ClientController {
 
-	private static final String API_SERVER_URL = "http://dev.apigw.minavardkontakter.se";
+	private static final String API_SERVER_URL = "http://localhost:8080";
 	private static final String STATE_SESSION_KEY = "oauth2-client.state";
 	private static final String DEV_CLIENT_ID = "apitest";
 	private static final String DEV_CLIENT_PASSWORD = "secret";
-	private static final String CALLBACK_URL = "http://localhost:8080/back-from-authorization";
+	private static final String CALLBACK_URL = "http://localhost:9090/back-from-authorization";
 	
 	@Autowired
 	private UserAccessTokenRepository userAccessTokenRepository;
@@ -46,7 +46,7 @@ public class OAuth2ClientController {
 		session.setAttribute(STATE_SESSION_KEY, randomState);
 		
 		String urlToAuthorization = API_SERVER_URL 
-				+ "/oauth/authorize?"
+				+ "/apigw-auth-server-web/oauth/authorize?"
 				+ "client_id=" + DEV_CLIENT_ID
 				+ "&response_type=code"
 				+ "&scope=CRM_SCHEDULING_READ"
@@ -121,7 +121,7 @@ public class OAuth2ClientController {
 		headers.set("Authorization", calculateBasicAuthHeader(DEV_CLIENT_ID, DEV_CLIENT_PASSWORD) );
 		HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
 		ResponseEntity<AccessToken> tokenEnpointResponse = tokenEndpoint.exchange(API_SERVER_URL 
-				+ "/oauth/token?grant_type=authorization_code&code={1}&state={2}&redirect_uri={3}", 
+				+ "/apigw-auth-server-intsvc/oauth/token?grant_type=authorization_code&code={1}&state={2}&redirect_uri={3}", 
 				HttpMethod.POST, requestEntity, AccessToken.class, 
 				authorizationCode, state, CALLBACK_URL); // no need to URL encode CALLBACK_URL here since RestTemplate does this.
 		return tokenEnpointResponse.getBody().getAccessToken();
@@ -137,7 +137,7 @@ public class OAuth2ClientController {
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + accessToken );
 		HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
-		ResponseEntity<String> scheduleEnpointResponse = scheduleEndpoint.exchange(API_SERVER_URL + "/crm/scheduling/v1/schedule", 
+		ResponseEntity<String> scheduleEnpointResponse = scheduleEndpoint.exchange(API_SERVER_URL + "/crm-scheduling-api/crm/scheduling/v1/schedule", 
 				HttpMethod.GET, requestEntity, String.class);
 		return scheduleEnpointResponse.getBody();
 	}
