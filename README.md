@@ -28,8 +28,7 @@ Before you start with the labs, make sure you have the following set of prerequi
 	- Download and install from: [https://install.bankid.com/](https://install.bankid.com/)
 
 * Test certificates/IDs for BankID
-	- Download from here: [http://www.bankid.com/Global/wwwbankidcom/RP/Test%20BankIDn.zip](http://www.bankid.com/Global/wwwbankidcom/RP/Test%20BankIDn.zip)
-	- Or from here: [http://sdk.minavardkontakter.se/wp-content/uploads/2012/04/Test-E-leg.zip](http://sdk.minavardkontakter.se/wp-content/uploads/2012/04/Test-E-leg.zip). 
+	- Download from here: [http://www.bankid.com/Global/wwwbankidcom/RP/Testdata_20130516.zip](http://www.bankid.com/Global/wwwbankidcom/RP/Testdata_20130516.zip)
   - All of the test certificates have **password 123456qwerty**
   - Unzip them and import them into the BankID client
 
